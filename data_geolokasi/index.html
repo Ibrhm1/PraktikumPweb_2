@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geolokasi & IP Device</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <div class="navbar shadow-sm bg-netural fixed z-10">
+      <div class="flex-1">
+        <div class="dropdown">
+          <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </div>
+          <ul
+            tabindex="0"
+            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+          >
+            <li>
+              <a href="./data_geolokasi/" class="btn btn-ghost font-semibold"
+                >Data Geolokasi</a
+              >
+            </li>
+            <li>
+              <a href="./informasi_cuaca/" class="btn btn-ghost font-semibold"
+                >Informasi Cuaca</a
+              >
+            </li>
+            <li>
+              <a href="./informasi_negara/" class="btn btn-ghost font-semibold"
+                >Informasi Negara</a
+              >
+            </li>
+            <li>
+              <a href="./praktikum_1/" class="btn btn-ghost font-semibold"
+                >Praktikum 1</a
+              >
+            </li>
+          </ul>
+        </div>
+        <a class="btn btn-ghost text-xl" href="../">Iib Ibrahim</a>
+      </div>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1 hidden lg:flex">
+          <li>
+            <a href="../data_geolokasi/" class="btn btn-ghost font-semibold"
+              >Data Geolokasi</a
+            >
+          </li>
+          <li>
+            <a href="../informasi_cuaca/" class="btn btn-ghost font-semibold"
+              >Informasi Cuaca</a
+            >
+          </li>
+          <li>
+            <a href="../informasi_negara/" class="btn btn-ghost font-semibold"
+              >Informasi Negara</a
+            >
+          </li>
+          <li>
+            <a href="../praktikum_1/" class="btn btn-ghost font-semibold"
+              >Praktikum 1</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hero bg-base-200 min-h-screen">
+      <div class="flex w-1/2 flex-col">
+        <div class="card bg-base-300 rounded-box grid h-50 place-items-center">
+          <h1 class="text-3xl text-center font-bold">
+            Mengambil Data Geolokasi dan IP Anda
+          </h1>
+          <blockquote class="font-light text-center">
+            Mengambil data koordinat lokasi melalui browser dan mendapatkan
+            alamat IP Anda dari API ipify.org
+          </blockquote>
+          <button class="btn btn-neutral" onclick="getLocation()">
+            Dapatkan Lokasi & IP
+          </button>
+
+          <div class="card">
+            <p id="lokasi">Klik tombol di atas untuk memulai.</p>
+            <p id="ip"></p>
+          </div>
+        </div>
+        <div class="divider">OR</div>
+        <div class="card bg-base-300 rounded-box grid place-items-center">
+          <div id="map" class="w-full h-80"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const lokasi = document.getElementById('lokasi');
+      const ip = document.getElementById('ip');
+      const map = document.getElementById('map');
+
+      function getLocation() {
+        if (!navigator.geolocation) {
+          lokasi.innerText = 'Browser tidak mendukung geolokasi.';
+          return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            lokasi.innerHTML = `<strong>Latitude:</strong> ${lat}<br><strong>Longitude:</strong> ${lon}`;
+            map.innerHTML = `
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://maps.google.com/maps?q=${lat},${lon}&z=15&output=embed"
+              frameborder="0"
+              allowfullscreen>
+            </iframe>`;
+          },
+          () => {
+            lokasi.innerText = 'Tidak bisa mengambil lokasi.';
+          }
+        );
+      }
+
+      // Ambil IP
+      fetch('https://api.ipify.org?format=json')
+        .then((r) => r.json())
+        .then((data) => (ip.innerHTML = `<strong>IP Anda:</strong> ${data.ip}`))
+        .catch(() => (ip.innerText = 'Gagal mengambil IP.'));
+    </script>
+  </body>
+</html>

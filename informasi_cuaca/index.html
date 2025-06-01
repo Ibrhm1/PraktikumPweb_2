@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Informasi Cuaca</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <div class="navbar shadow-sm bg-netural fixed z-10">
+      <div class="flex-1">
+        <div class="dropdown">
+          <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </div>
+          <ul
+            tabindex="0"
+            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+          >
+            <li>
+              <a href="./data_geolokasi/" class="btn btn-ghost font-semibold"
+                >Data Geolokasi</a
+              >
+            </li>
+            <li>
+              <a href="./informasi_cuaca/" class="btn btn-ghost font-semibold"
+                >Informasi Cuaca</a
+              >
+            </li>
+            <li>
+              <a href="./informasi_negara/" class="btn btn-ghost font-semibold"
+                >Informasi Negara</a
+              >
+            </li>
+            <li>
+              <a href="./praktikum_1/" class="btn btn-ghost font-semibold"
+                >Praktikum 1</a
+              >
+            </li>
+          </ul>
+        </div>
+        <a class="btn btn-ghost text-xl" href="../">Iib Ibrahim</a>
+      </div>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1 hidden lg:flex">
+          <li>
+            <a href="../data_geolokasi/" class="btn btn-ghost font-semibold"
+              >Data Geolokasi</a
+            >
+          </li>
+          <li>
+            <a href="../informasi_cuaca/" class="btn btn-ghost font-semibold"
+              >Informasi Cuaca</a
+            >
+          </li>
+          <li>
+            <a href="../informasi_negara/" class="btn btn-ghost font-semibold"
+              >Informasi Negara</a
+            >
+          </li>
+          <li>
+            <a href="../praktikum_1/" class="btn btn-ghost font-semibold"
+              >Praktikum 1</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hero bg-base-200 min-h-screen">
+      <div class="flex w-1/2 flex-col">
+        <div class="rounded-box grid h-40 place-items-center">
+          <h1 class="text-3xl text-center font-bold">Cari Informasi Cuaca</h1>
+          <fieldset
+            class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4"
+          >
+            <legend class="fieldset-legend">Settings</legend>
+            <div class="join">
+              <input
+                type="text"
+                class="input join-item"
+                placeholder="Product name"
+                id="cityInput"
+              />
+              <button class="btn join-item" onclick="cariCuaca()">Cari</button>
+            </div>
+          </fieldset>
+          <div></div>
+        </div>
+        <div class="divider"></div>
+        <div class="rounded-box grid place-items-center">
+          <div id="result" class="w-full"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const apiKey = 'b7cfbf7672ca3dc124a4f950ceb813a4';
+
+      function cariCuaca() {
+        const kota = document.getElementById('cityInput').value.trim();
+        if (!kota) return alert('Masukkan nama kota.');
+
+        fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
+            kota
+          )}&appid=${apiKey}&units=metric&lang=id`
+        )
+          .then((res) => {
+            if (!res.ok) throw new Error('Kota tidak ditemukan');
+            return res.json();
+          })
+          .then((data) => {
+            document.getElementById('result').innerHTML = `<div
+              class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100"
+            >
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th>Kota</th>
+                    <td>${data.name}</td>
+                  </tr>
+                  <tr>
+                    <th>Negara</th>
+                    <td>${data.sys.country}</td>
+                  </tr>
+                  <tr>
+                    <th>Suhu</th>
+                    <td>${data.main.temp} °C</td>
+                  </tr>
+                  <tr>
+                    <th>Cuaca</th>
+                    <td>${data.weather[0].description}</td>
+                  </tr>
+                  <tr>
+                    <th>Kecepatan Angin</th>
+                    <td>${data.wind.speed} m/s</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>`;
+          })
+          .catch(() => {
+            document.getElementById('result').innerHTML =
+              '<p class="error">Kota tidak ditemukan.</p>';
+          });
+      }
+    </script>
+  </body>
+</html>

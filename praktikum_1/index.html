@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TUGAS PRAKTIKUM 1 - Informasi Cuaca</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <div class="navbar shadow-sm bg-netural fixed z-10">
+      <div class="flex-1">
+        <div class="dropdown">
+          <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </div>
+          <ul
+            tabindex="0"
+            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+          >
+            <li>
+              <a href="./data_geolokasi/" class="btn btn-ghost font-semibold"
+                >Data Geolokasi</a
+              >
+            </li>
+            <li>
+              <a href="./informasi_cuaca/" class="btn btn-ghost font-semibold"
+                >Informasi Cuaca</a
+              >
+            </li>
+            <li>
+              <a href="./informasi_negara/" class="btn btn-ghost font-semibold"
+                >Informasi Negara</a
+              >
+            </li>
+            <li>
+              <a href="./praktikum_1/" class="btn btn-ghost font-semibold"
+                >Praktikum 1</a
+              >
+            </li>
+          </ul>
+        </div>
+        <a class="btn btn-ghost text-xl" href="../">Iib Ibrahim</a>
+      </div>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1 hidden lg:flex">
+          <li>
+            <a href="../data_geolokasi/" class="btn btn-ghost font-semibold"
+              >Data Geolokasi</a
+            >
+          </li>
+          <li>
+            <a href="../informasi_cuaca/" class="btn btn-ghost font-semibold"
+              >Informasi Cuaca</a
+            >
+          </li>
+          <li>
+            <a href="../informasi_negara/" class="btn btn-ghost font-semibold"
+              >Informasi Negara</a
+            >
+          </li>
+          <li>
+            <a href="../praktikum_1/" class="btn btn-ghost font-semibold"
+              >Praktikum 1</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hero bg-base-200 min-h-screen">
+      <div class="hero-content flex-col">
+        <div>
+          <h1 class="text-5xl font-bold text-center">Praktikum 1</h1>
+          <fieldset
+            class="fieldset bg-neutral-content shadow shadow-lg border-base-300 rounded-box w-xs border p-4 mt-2"
+          >
+            <legend class="fieldset-legend">Masukkan Nama Kota</legend>
+            <div class="join">
+              <input
+                type="text"
+                class="input join-item"
+                placeholder="Masukan Nama Kota"
+                id="kota"
+              />
+              <button class="btn join-item" onclick="ambilCuaca()">save</button>
+            </div>
+          </fieldset>
+        </div>
+        <div class="overflow-x-auto" id="hasil"></div>
+      </div>
+    </div>
+
+    <script>
+      const apiKey = '2b50611201940df31d57d7779f445c5b';
+
+      function ambilCuaca() {
+        const namaKota = document.getElementById('kota').value.trim();
+        if (!namaKota) {
+          alert('Masukkan nama kota!');
+          return;
+        }
+
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
+          namaKota
+        )}&units=metric&appid=${apiKey}&lang=id`;
+
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) throw new Error('Kota tidak ditemukan!');
+            return response.json();
+          })
+          .then((data) => {
+            const suhu = Math.round(data.main.temp);
+            const deskripsi = data.weather[0].description;
+            const kelembaban = data.main.humidity;
+            const nama = data.name;
+            const negara = data.sys.country;
+            const suhuMin = data.main.temp_min;
+            const suhuMax = data.main.temp_max;
+            const tekanan = data.main.pressure;
+            const angin = data.wind.speed;
+            const arahAngin = data.wind.deg;
+            const tutupanAwan = data.clouds.all;
+            const jarakPandang = (data.visibility / 1000).toFixed(1);
+
+            document.getElementById('hasil').innerHTML = `
+            <div class="overflow-x-auto">
+            <h2 class="font-bold text-center">${suhu}°C</h2>
+            <p class="text-center">
+              ${deskripsi.charAt(0).toUpperCase() + deskripsi.slice(1)}
+            </p>
+            <table class="table table-zebra">
+              <tbody>
+                <tr>
+                  <th>Kota</th>
+                  <td>${nama}, ${negara}</td>
+                </tr>
+                <tr>
+                  <th>Suhu Min - Max</th>
+                  <td>${suhuMin}°C - ${suhuMax}°C</td>
+                </tr>
+                <tr>
+                  <th>Kelembaban</th>
+                  <td>${kelembaban}%</td>
+                </tr>
+                <tr>
+                  <th>Tekanan</th>
+                  <td>${tekanan} mb</td>
+                </tr>
+                <tr>
+                  <th>Kecepatan Angin</th>
+                  <td>${angin} m/s</td>
+                </tr>
+                <tr>
+                  <th>Arah Angin</th>
+                  <td>${arahAngin}°</td>
+                </tr>
+                <tr>
+                  <th>Tutupan Awan</th>
+                  <td>${tutupanAwan}%</td>
+                </tr>
+                <tr>
+                  <th>Jarak Pandang</th>
+                  <td>${jarakPandang} km</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>`;
+          })
+          .catch((error) => {
+            document.getElementById(
+              'hasil'
+            ).innerHTML = `<p class="error">${error.message}</p>`;
+          });
+      }
+    </script>
+  </body>
+</html>
