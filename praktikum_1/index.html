@@ -91,8 +91,8 @@
     </div>
 
     <div class="hero bg-base-200 min-h-screen">
-      <div class="hero-content flex-col">
-        <div>
+      <div class="flex w-1/2 flex-col">
+        <div class="card rounded-box grid h-40 place-items-center">
           <h1 class="text-5xl font-bold text-center">Praktikum 1</h1>
           <fieldset
             class="fieldset bg-neutral-content shadow shadow-lg border-base-300 rounded-box w-xs border p-4 mt-2"
@@ -105,10 +105,11 @@
                 placeholder="Masukan Nama Kota"
                 id="kota"
               />
-              <button class="btn join-item" onclick="ambilCuaca()">save</button>
+              <button class="btn join-item" onclick="ambilCuaca()">Cari</button>
             </div>
           </fieldset>
         </div>
+        <div class="divider"></div>
         <div class="overflow-x-auto" id="hasil"></div>
       </div>
     </div>
