@@ -90,63 +90,91 @@
       </div>
     </div>
 
-    <div class="hero bg-base-200 min-h-screen">
-      <div class="stats shadow">
-        <div class="stat">
-          <div class="stat-figure text-primary">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              class="inline-block h-8 w-8 stroke-current"
+    <div
+      class="hero bg-base-200 min-h-screen flex justify-center flex-wrap flex-col gap-2 pt-20 md:flex-row"
+    >
+      <!-- ** Data Geolokasi -->
+      <div class="card bg-base-100 w-85 shadow-sm">
+        <div class="card-body">
+          <h2 class="card-title font-bold">Data Geolokasi</h2>
+          <p>
+            Mengambil data koordinat lokasi melalui browser dan mendapatkan
+            alamat IP Anda dari API
+            <a
+              href="https://www.ipify.org/"
+              target="_blank"
+              class="link link-info font-semibold"
+              >ipify.org</a
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              ></path>
-            </svg>
-          </div>
-          <div class="stat-title">Total Likes</div>
-          <div class="stat-value text-primary">25.6K</div>
-          <div class="stat-desc">21% more than last month</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-figure text-secondary">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              class="inline-block h-8 w-8 stroke-current"
+          </p>
+          <div class="card-actions justify-end">
+            <a href="./data_geolokasi/" class="btn btn-neutral px-6 btn-sm"
+              >Lihat</a
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 10V3L4 14h7v7l9-11h-7z"
-              ></path>
-            </svg>
           </div>
-          <div class="stat-title">Page Views</div>
-          <div class="stat-value text-secondary">2.6M</div>
-          <div class="stat-desc">21% more than last month</div>
         </div>
-
-        <div class="stat">
-          <div class="stat-figure text-secondary">
-            <div class="avatar avatar-online">
-              <div class="w-16 rounded-full">
-                <img
-                  src="https://img.daisyui.com/images/profile/demo/anakeen@192.webp"
-                />
-              </div>
-            </div>
+      </div>
+      <!-- ** Informasi Cuaca -->
+      <div class="card bg-base-100 w-85 shadow-sm">
+        <div class="card-body">
+          <h2 class="card-title font-bold">Informasi Cuaca</h2>
+          <p>
+            Mengambil data cuaca melalui API
+            <a
+              href="https://openweathermap.org/"
+              target="_blank"
+              class="link link-info font-semibold"
+              >OpenWeatherMap
+            </a>
+            dan mendapatkan informasi cuaca berdasarkan koordinat lokasi
+          </p>
+          <div class="card-actions justify-end">
+            <a href="./informasi_cuaca/" class="btn btn-neutral px-6 btn-sm"
+              >Lihat</a
+            >
           </div>
-          <div class="stat-value">86%</div>
-          <div class="stat-title">Tasks done</div>
-          <div class="stat-desc text-secondary">31 tasks remaining</div>
+        </div>
+      </div>
+      <!-- ** Informasi Negara -->
+      <div class="card bg-base-100 w-85 shadow-sm">
+        <div class="card-body">
+          <h2 class="card-title font-bold">Informasi Negara</h2>
+          <p>
+            Mengambil data informasi negara melalui API
+            <a
+              href="https://restcountries.com/"
+              target="_blank"
+              class="link link-info font-semibold"
+              >RestCountries
+            </a>
+            dan mendapatkan informasi negara berdasarkan nama negara
+          </p>
+          <div class="card-actions justify-end">
+            <a href="./informasi_negara/" class="btn btn-neutral px-6 btn-sm"
+              >Lihat</a
+            >
+          </div>
+        </div>
+      </div>
+      <!-- ** Praktikum 1 -->
+      <div class="card bg-base-100 w-85 shadow-sm">
+        <div class="card-body">
+          <h2 class="card-title font-bold">Praktikum 1</h2>
+          <p>
+            Mengambil data informasi detail dari negara melalui API
+            <a
+              href="https://restcountries.com/"
+              target="_blank"
+              class="link link-info font-semibold"
+              >RestCountries
+            </a>
+            dan mendapatkan informasi negara berdasarkan nama negara
+          </p>
+          <div class="card-actions justify-end">
+            <a href="./praktikum_1/" class="btn btn-neutral px-6 btn-sm"
+              >Lihat</a
+            >
+          </div>
         </div>
       </div>
     </div>
